@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Timo's spelletjes website</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .button {
+            display: block; /* zorgt dat ze onder elkaar staan */
+            width: 250px;
+            margin: 15px auto;
+            padding: 15px;
+            font-size: 18px;
+            color: white;
+            background-color: #4CAF50;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🎮 Timo's spelletjes website</h1>
+
+    <div class="container">
+        <a href="stick_fighter.html" class="button">stick fighter</a>
+        <a href="cookie_clicker.html" class="button">cookie clicker</a>
+        <a href="drive_mad.html" class="button">drive mad</a>
+        <a href="geometry_dash.html" class="button">geometry dash</a>
+        <a href="chaiersbeats.html" class="button">chaiersbeats</a>
+        <a href="beat_city.html" class="button">beat city</a>
+    </div>
+
+</body>
+</html>
