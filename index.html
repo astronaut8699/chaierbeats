@@ -24,6 +24,7 @@
 
         .container {
             margin-top: 40px;
+            display: none; /* Verberg spelletjes totdat test & wachtwoord zijn goed */
         }
 
         .button {
@@ -47,6 +48,32 @@
         .button:active {
             transform: scale(0.95);
         }
+
+        #captcha-container, #password-container {
+            margin-top: 50px;
+        }
+
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 
@@ -54,6 +81,24 @@
 
     <h1>🎮 Timo's spelletjes website</h1>
 
+    <!-- CAPTCHA -->
+    <div id="captcha-container">
+        <p>Typ het antwoord op deze som om te bewijzen dat je geen robot bent:</p>
+        <p id="captcha-question"></p>
+        <input type="text" id="captcha-answer" placeholder="Antwoord">
+        <button onclick="checkCaptcha()">Verstuur</button>
+        <p id="captcha-error" style="color:red;"></p>
+    </div>
+
+    <!-- Wachtwoord -->
+    <div id="password-container" style="display:none;">
+        <p>Voer het wachtwoord in om toegang te krijgen:</p>
+        <input type="password" id="password-input" placeholder="Wachtwoord">
+        <button onclick="checkPassword()">Verstuur</button>
+        <p id="password-error" style="color:red;"></p>
+    </div>
+
+    <!-- Spelletjes -->
     <div class="container">
         <a href="stick_fighter.html" class="button">stick fighter</a>
         <a href="cookie_clicker.html" class="button">cookie clicker</a>
@@ -61,7 +106,39 @@
         <a href="geometry_dash.html" class="button">geometry dash</a>
         <a href="chaiersbeats.html" class="button">chaiersbeats</a>
         <a href="beatcity.html" class="button">beat city</a>
+        <a href="https://calcsolver.net/" class="button">more unblockd games</a>
     </div>
+
+    <script>
+        // Instelbaar wachtwoord
+        const correctPassword = "jouwWachtwoord123"; // <- Hier verander je het wachtwoord
+
+        // Simpele CAPTCHA
+        let num1 = Math.floor(Math.random() * 10) + 1;
+        let num2 = Math.floor(Math.random() * 10) + 1;
+        let captchaAnswer = num1 + num2;
+        document.getElementById("captcha-question").innerText = `${num1} + ${num2} = ?`;
+
+        function checkCaptcha() {
+            let answer = document.getElementById("captcha-answer").value;
+            if (parseInt(answer) === captchaAnswer) {
+                document.getElementById("captcha-container").style.display = "none";
+                document.getElementById("password-container").style.display = "block";
+            } else {
+                document.getElementById("captcha-error").innerText = "Fout antwoord. Probeer opnieuw.";
+            }
+        }
+
+        function checkPassword() {
+            let input = document.getElementById("password-input").value;
+            if (input === correctPassword) {
+                document.getElementById("password-container").style.display = "none";
+                document.querySelector(".container").style.display = "block";
+            } else {
+                document.getElementById("password-error").innerText = "Fout wachtwoord. Probeer opnieuw.";
+            }
+        }
+    </script>
 
 </body>
 </html>
