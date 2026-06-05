@@ -83,7 +83,7 @@
 
     <!-- CAPTCHA -->
     <div id="captcha-container">
-        <p>Typ het antwoord op deze som om te bewijzen dat je geen robot bent:</p>
+        <p>Beantwoord de vragen om te bewijzen dat je geen robot bent:</p>
         <p id="captcha-question"></p>
         <input type="text" id="captcha-answer" placeholder="Antwoord">
         <button onclick="checkCaptcha()">Verstuur</button>
@@ -111,21 +111,58 @@
 
     <script>
         // Instelbaar wachtwoord
-        const correctPassword = "jouwWachtwoord123"; // <- Hier verander je het wachtwoord
+        const correctPassword = "Gele_Auto_2026!"; // <- Hier verander je het wachtwoord
 
-        // Simpele CAPTCHA
-        let num1 = Math.floor(Math.random() * 10) + 1;
-        let num2 = Math.floor(Math.random() * 10) + 1;
-        let captchaAnswer = num1 + num2;
-        document.getElementById("captcha-question").innerText = `${num1} + ${num2} = ?`;
+        // **Superlastige CAPTCHA**
+        const vragen = [
+            { vraag: "Wat is 137 × 29 - 456 ?", antwoord: "3843" },
+            { vraag: "Wat is 25² + 49 ?", antwoord: "674" },
+            { vraag: "Los op: 15 × 8 + 64 ÷ 4", antwoord: "136" },
+            { vraag: "Typ het woord 'javascript' achterstevoren", antwoord: "tpircsavaj" },
+            { vraag: "Verwijder alle klinkers uit 'complexiteit'", antwoord: "cmplxkt" },
+            { vraag: "Wat is de 5e letter van 'programmeren'?", antwoord: "r" },
+            { vraag: "Wat is het volgende getal in de reeks: 2, 6, 12, 20, ?", antwoord: "30" },
+            { vraag: "Welke letter hoort hier: A, C, F, J, ?", antwoord: "O" },
+            { vraag: "Onthoud deze code: X7P4K9Q2 (je moet dit exact typen)", antwoord: "X7P4K9Q2" },
+            { vraag: "Typ exact: IK BEN GEEN ROBOT", antwoord: "IK BEN GEEN ROBOT" }
+        ];
+
+        // Shuffle de vragen
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        const willekeurigeVragen = shuffle(vragen);
+        let huidigeVraag = 0;
+
+        function startTest() {
+            document.getElementById("captcha-question").innerText =
+                willekeurigeVragen[huidigeVraag].vraag;
+        }
 
         function checkCaptcha() {
-            let answer = document.getElementById("captcha-answer").value;
-            if (parseInt(answer) === captchaAnswer) {
-                document.getElementById("captcha-container").style.display = "none";
-                document.getElementById("password-container").style.display = "block";
+            const antwoord = document.getElementById("captcha-answer").value.trim();
+
+            if (antwoord === willekeurigeVragen[huidigeVraag].antwoord) {
+                huidigeVraag++;
+
+                if (huidigeVraag >= willekeurigeVragen.length) {
+                    document.getElementById("captcha-container").style.display = "none";
+                    document.getElementById("password-container").style.display = "block";
+                } else {
+                    document.getElementById("captcha-answer").value = "";
+                    document.getElementById("captcha-question").innerText =
+                        willekeurigeVragen[huidigeVraag].vraag;
+                }
             } else {
-                document.getElementById("captcha-error").innerText = "Fout antwoord. Probeer opnieuw.";
+                alert("Fout antwoord! Je begint opnieuw.");
+                huidigeVraag = 0;
+                document.getElementById("captcha-answer").value = "";
+                startTest();
             }
         }
 
@@ -138,6 +175,8 @@
                 document.getElementById("password-error").innerText = "Fout wachtwoord. Probeer opnieuw.";
             }
         }
+
+        window.onload = startTest;
     </script>
 
 </body>
